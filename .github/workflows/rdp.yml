@@ -14,10 +14,12 @@ jobs:
       - name: Install Tailscale
         run: |
           choco install tailscale -y
+          Start-Sleep -Seconds 10
 
       - name: Connect Tailscale
         run: |
-          tailscale up --authkey=YOUR_TAILSCALE_AUTHKEY --hostname=rdp-github
+          $tailscale = "C:\Program Files (x86)\Tailscale IPN\tailscale.exe"
+          & $tailscale up --authkey=${{ secrets.TS_KEY }} --hostname=rdp-github
 
       - name: Enable RDP
         run: |
@@ -30,7 +32,8 @@ jobs:
 
       - name: Show Tailscale IP
         run: |
-          tailscale ip -4
+          $tailscale = "C:\Program Files (x86)\Tailscale IPN\tailscale.exe"
+          & $tailscale ip -4
 
       - name: Keep Alive
         run: |
